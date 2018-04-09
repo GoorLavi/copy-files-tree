@@ -1,0 +1,25 @@
+{
+  "name": "copy-files-tree",
+  "version": "1.0.0",
+  "description": "copy files from source into destination by files tree",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GoorLavi/copy-files-tree.git"
+  },
+  "keywords": [
+    "copy-files-tree",
+    "copy",
+    "files",
+    "tree"
+  ],
+  "author": "Goor Lavi <goorlavi1@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GoorLavi/copy-files-tree/issues"
+  },
+  "homepage": "https://github.com/GoorLavi/copy-files-tree#readme"
+}
