@@ -44,8 +44,8 @@ Destination/wantedFolder/ ------ image.png
                                - folder2/ ------  file.txt       
 ```
 
-[More Examples](https://github.com/GoorLavi/copy-files-tree/blob/master/example.js)
+[More Examples](example.js)
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE) file for details
