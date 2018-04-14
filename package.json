@@ -23,7 +23,6 @@
   },
   "homepage": "https://github.com/GoorLavi/copy-files-tree#readme",
   "dependencies": {
-    "copy-dir": "^0.3.0",
     "fs-extra": "^5.0.0",
     "lodash": "^4.17.5",
     "wrench": "^1.5.9"

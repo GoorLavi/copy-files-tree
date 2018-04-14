@@ -1,4 +1,3 @@
-const copydir = require("copy-dir");
 const _ = require("lodash");
 const wrench = require("wrench");
 const fs = require('fs-extra')  
