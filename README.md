@@ -20,12 +20,12 @@ Only sync method is provided
 ```
 const copyFilesTree = require('copy-files-tree');
 
-// Copy folders with one inner folder
+
 
 copyFilesTree(filesTree, 'SourceFolder/','Destination'+'/wantedFolder/');
 
 
-
+// Copy folders with one inner folder
 const error = copyFilesTree({
     files: [{name: 'image.png'}...],
     folder1: {innerFolder: {files: [{name: 'file.text'}]}},
