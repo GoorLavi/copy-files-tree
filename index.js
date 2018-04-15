@@ -41,6 +41,9 @@ const copyFolder = (treePath, destination) => {
     _.forEach(currentBranch, (value, folderName) => {
       if(folderName !== 'files'){
         const innerTreePath = treePath ?  treePath+'.'+folderName : folderName;
+
+        // In case on unexisted parent folder mkdir parent
+        fs.ensureDirSync(destination)
         copyFolder(innerTreePath, joinPath(destination, folderName));
       }
     });
