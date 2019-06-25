@@ -1,113 +1,73 @@
-const _ = require("lodash");
-const wrench = require("wrench");
-const fs = require('fs-extra')  
+const _ = require('lodash');
+const wrench = require('wrench');
+const fs = require('fs-extra');
 
 
-let filesTree, mainFolderPath;
+let filesTree, mainFolderPath, destination;
+module.exports = (_filesTree, source, _destination) => {
 
-module.exports =  (_filesTree, source, destination) => {
+    filesTree = _filesTree;
+    mainFolderPath = source;
+    destination = _destination;
 
-  filesTree = _filesTree;
-  mainFolderPath = source;
-
-  try{
-
-    copyFolder("", destination);
-    return;
-  }
-  catch(error){
-    return error;
-  }
-}
-
-/**
- * @param {string} treePath 
- * @param {string} destination 
- */
-const copyFolder = (treePath, destination) => {
-
-  const folder = treePath ? _.get(filesTree, treePath): filesTree;
-
-  // If main dir is fully chosen
-  if(folder.fullyChosen)
-    fullFolderCopy(joinPath(mainFolderPath, treePath.replace('.', '/')), destination);
-
-  else{
-    copyFiles(treePath, destination);
-
-    // In case this is the main branch
-    const currentBranch = treePath ? _.get(filesTree, treePath) : filesTree;
-   
-    _.forEach(currentBranch, (value, folderName) => {
-      if(folderName !== 'files'){
-        const innerTreePath = treePath ?  treePath+'.'+folderName : folderName;
-
-        // In case on unexisted parent folder mkdir parent
-        fs.ensureDirSync(destination)
-        copyFolder(innerTreePath, joinPath(destination, folderName));
-      }
-    });
-  }
-};
-
-/**
- *  Copy all tree files
- * @param {string} treePath 
- * @param {string} destination 
- */
-const copyFiles= (treePath, destination) => {
-
-  const filesPaths = getFilesFullPaths(treePath);
-
-  _.forEach(filesPaths, (filePath) => {
-
-  const fileName = _.last(filePath.split('/'));
-
-  const fullDestination = joinPath(destination, fileName); 
-    fs.copySync(filePath, fullDestination);
-  });
-};
-
-// Copy hole folder into destenation
-const fullFolderCopy = (fullFolderPath, folderDestination) =>{
-
-  wrench.copyDirSyncRecursive(fullFolderPath, folderDestination, {
-    forceDelete: false
-  });
+    try {
+        copyFolder();
+    } catch (error) {
+        console.error(error);
+        return error;
+    }
 };
 
 
-/**
- * Return all existed files in treePath with thier full path
- * @param {string} treePath 
- */
-const getFilesFullPaths = (treePath) => {
+const copyFolder = (treePath = '') => {
 
-    const path = treePath ? treePath + '.files' : 'files';
+    const folder = treePath ? _.get(filesTree, treePath) : filesTree;
 
-    const files = _.get(filesTree, path);
-    
-    return _.map(files, (file) => {
+    // If main dir is fully chosen
+    if (folder.fullyChosen)
+        return fullFolderCopy(joinFolderPath(mainFolderPath, toFoldersPath(treePath)), joinFolderPath(destination, toFoldersPath(treePath)));
 
-      // Convert to files path format
-      treePath = treePath.replace('.', '/');
-      return joinPath(mainFolderPath, treePath, file.name);
+    else {
+        copyFiles(treePath);
+        const {files, folderRest} = folder;
+
+        Object.keys(folderRest).forEach(folderName => {
+            // In case on un-existed parent folder mkdir parent
+            fs.ensureDirSync(destination);
+            copyFolder(treePath ? joinObjectPath(treePath, folderName) : folderName);
+        });
+    }
+};
+
+
+const copyFiles = treePath => {
+
+    const filesPaths = getFilesFullPaths(treePath);
+
+    filesPaths.forEach(filePath => {
+        const [fileName] = filePath.split('/');
+
+        const fullDestination = joinFolderPath(destination, fileName);
+        fs.copySync(filePath, fullDestination);
     });
 };
 
-/**
- * Combine path with seperator
- * @param {Path string} path 
- * @param {Array} subPaths 
- */
-const joinPath = (path, ...subPaths) => {
-
-  _.forEach(subPaths,(subPath, index) => {
-    if(path[path.length-1] !== '/')
-      path += '/';
-
-      path += subPath; 
-  }); 
-
-  return path;
+// Copy hole folder into destination
+const fullFolderCopy = (fullFolderPath, folderDestination) => {
+    wrench.copyDirSyncRecursive(fullFolderPath, folderDestination, {
+        forceDelete: false
+    });
 };
+
+const getFilesFullPaths = treePath => {
+    const filesPath = treePath ? joinFolderPath(treePath, 'files') : 'files';
+
+    const files = _.get(filesTree, filesPath);
+    return files.map(file => joinFolderPath(mainFolderPath, toFoldersPath(treePath), file.name))
+};
+
+const joinFolderPath = (...paths) => paths.join('/');
+const joinObjectPath = (...paths) => paths.join('.');
+
+const toFoldersPath = str => str.replace(/\./g, '/');
+const toObjectPath = str => str.replace(/\//g, '.');
