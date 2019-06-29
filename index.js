@@ -14,10 +14,6 @@ const copyItems = ({items, destination, sourceDirPath}) =>
         fs.copySync(`${sourceDirPath}/${file}`, `${destination}/${file}`)
     );
 
-const copyFiles = async filesData => {
-};
-
-
 const copyFilesSync = filesData => {
 
     try {
@@ -39,7 +35,6 @@ const copyFilesSync = filesData => {
 
 module.exports = {
     copyFilesSync,
-    copyFiles,
 };
 
 
