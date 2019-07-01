@@ -46,7 +46,7 @@ const copyFilesSync = filesData => {
   }
 };
 
-const copyItemsAsync = ({
+const copyItems = ({
     items,
     destination,
     sourceDirPath
@@ -65,7 +65,11 @@ const copyItemsAsync = ({
 const copyFiles = async filesData => {
 
   try {
-    const promisesArrays = Object.keys(filesData).map(sourceDirPath => {
+    let allPromises = [];
+    const filesDataKeys = Object.keys(filesData);
+
+    for (filesDataIndex in filesDataKeys) {
+      const sourceDirPath = filesDataKeys[filesDataIndex];
       const folderObject = filesData[sourceDirPath];
       const {
         options: {
@@ -77,17 +81,14 @@ const copyFiles = async filesData => {
       } = folderObject;
       const items = [...foldersAndFiles, ...getAllFilteredItems(sourceDirPath, allDirectories, allFiles)];
 
-      return copyItemsAsync({
+      allPromises = [...allPromises, ...copyItems({
         items,
         destination,
         sourceDirPath
-      });
-    });
-
-    const allPromises = promisesArrays.reduce((acc, arr) => [...acc, ...arr]);
+      })];
+    }
 
     await Promise.all(allPromises);
-    return "Done copyFiles successfully";
   } catch (error) {
     return error;
   }

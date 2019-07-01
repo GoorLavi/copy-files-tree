@@ -22,8 +22,8 @@ const filesData = {
 };
 
 //Async operation
-copyFilesTree.copyFiles(filesData).then((response) => {
-    console.log(response)
+copyFilesTree.copyFiles(filesData).then(err => {
+    if (err) console.log(err);
 });
 //Sync operation
 copyFilesTree.copyFilesSync(filesData);
