@@ -1,4 +1,4 @@
-const copyFilesSync = require('./index').copyFilesSync;
+const copyFilesTree = require('./index');
 
 const filesData = {
     'source-folder-path': {
@@ -21,5 +21,9 @@ const filesData = {
     }
 };
 
-
-copyFilesSync(filesData);
+//Async operation
+copyFilesTree.copyFiles(filesData).then((response) => {
+    console.log(response)
+});
+//Sync operation
+copyFilesTree.copyFilesSync(filesData);
