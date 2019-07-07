@@ -20,8 +20,7 @@ const copyItemsSync = ({
 const copyFilesSync = filesData => {
 
   try {
-    Object.keys(filesData).forEach(sourceDirPath => {
-
+    for (sourceDirPath in filesData) {
       const folderObject = filesData[sourceDirPath];
       const {
         options: {
@@ -39,7 +38,8 @@ const copyFilesSync = filesData => {
         destination,
         sourceDirPath
       });
-    });
+    }
+
   } catch (error) {
     console.error(error);
     return error;
@@ -66,10 +66,8 @@ const copyFiles = async filesData => {
 
   try {
     let allPromises = [];
-    const filesDataKeys = Object.keys(filesData);
 
-    for (filesDataIndex in filesDataKeys) {
-      const sourceDirPath = filesDataKeys[filesDataIndex];
+    for (sourceDirPath in filesData) {
       const folderObject = filesData[sourceDirPath];
       const {
         options: {
