@@ -75,10 +75,11 @@ const copyFiles = async filesData => {
 
         await Promise.all(allPromises);
     } catch (error) {
+        console.error(error);
         return error;
     }
 
-}
+};
 
 module.exports = {
     copyFilesSync,
