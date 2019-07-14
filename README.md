@@ -15,14 +15,18 @@ yarn add copy-files-tree
 
 ### How to use?
 
-Only sync method is provided
+We made some changes in the api
+Currently we have copyFiles and copyItemsSync (both having the same parameters)
 
 ```
-const copyFilesTree = require('copy-files-tree');
+import {copyFiles, copyItemsSync} from 'copy-files-tree'
 
 
-
-copyFilesTree(filesTree, 'SourceFolder/','Destination'+'/wantedFolder/');
+copyFiles({
+    FolderPath1: { files:['image.png'], destination: 'FullDestinationFolderPath'},
+    FolderPath2: { allFiles: true, destination: 'FullDestinationFolderPath'},
+    FolderPath3: { allDirectories: true, destination: 'FullDestinationFolderPath'}
+});
 
 
 // Copy folders with one inner folder
