@@ -21,49 +21,67 @@ Currently we have copyFiles and copyItemsSync (both having the same parameters)
 ```
 import {copyFiles, copyItemsSync} from 'copy-files-tree'
 
-const error = copyFiles({
-    FolderPath1: FolderProps,
-    FolderPath2: { allFiles: true, destination: 'FullDestinationFolderPath'},
-    FolderPath3: { allDirectories: true, destination: 'FullDestinationFolderPath'}
-});
+const error = copyFiles(FoldersData);
 ```
 
 ## Props
 
-### foldersAndFiles
+- `FoldersData` `<Object>`
+  
+  
+  - `Key` `<String>` Folder source path
+  
+  - `Value` `<Object>` Folder data . 
+  
+    - `foldersAndFiles` `<Array>` Of `<String>` should contain the folders/files names you want to copy from the `Key` path 
 
-Type: Array 
+    - `destination` `<String>` Destination folder path
+    
+    - `options` `<Object>` 
+    
+      - `allFiles` `<boolean>` Default `false`, use true in case you want to copy all the files in  the `Key` path 
 
-Files and folders names which you want to copy
-
-### allFiles
-
-Type: Bool
-
-Default false, use true in case you want to copy all the files   
-
-### allDirectories
-
-Type: Bool
-
-Default false, use true in case you want to copy all the directories 
-
-### destination
-
-Type: String
-
-Full path to destination location 
+      - `allDirectories` `<boolean>` Default `false`, use true in case you want to copy all the folders in  the `Key` path 
 
 
 
-#### Result
+### Example:   
 
+```js
+import {copyFiles} from 'copy-files-tree'
+
+const FoldersData = {
+    '/Users/user/folder name 1': {
+        foldersAndFiles: ['image.png', 'inner folder name1'],
+        destination: '/Users/user1/some folder name',
+    },
+    '/Users/user1/folder name 2': {
+        options: {
+            allFiles: true,  // Folder files [`file name1.txt`, `file name2.txt`]
+        },
+        destination: '/Users/user2/some folder name2'
+    }
+}
+
+const error = copyFiles(FoldersData);
 ```
-Destination/wantedFolder/ ------ image.png          
-                               |       
-                               - folder1/ ------  innerFolder/ ----- file.text         
-                               |         
-                               - folder2/ ------  file.txt       
+
+
+```js
+/Users/ ----- |
+               - user1 ---
+              |            |
+              |              -  'image.png'
+              |            |
+              |              - 'inner folder name1' // With all the inner files and folders
+              |
+              |
+               - user2 --- 
+                           |
+                            - `file name1.txt`
+                           |
+                            - `file name2.txt`
+                            
 ```
 
 [More Examples](example.js)
