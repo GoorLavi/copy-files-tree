@@ -21,21 +21,39 @@ Currently we have copyFiles and copyItemsSync (both having the same parameters)
 ```
 import {copyFiles, copyItemsSync} from 'copy-files-tree'
 
-
-copyFiles({
-    FolderPath1: { files:['image.png'], destination: 'FullDestinationFolderPath'},
+const error = copyFiles({
+    FolderPath1: FolderProps,
     FolderPath2: { allFiles: true, destination: 'FullDestinationFolderPath'},
     FolderPath3: { allDirectories: true, destination: 'FullDestinationFolderPath'}
 });
-
-
-// Copy folders with one inner folder
-const error = copyFilesTree({
-    files: [{name: 'image.png'}...],
-    folder1: {innerFolder: {files: [{name: 'file.text'}]}},
-    folder2: {files: [{name: 'file.txt'}]}
-}, 'SourceFolder/','Destination'+'/wantedFolder/');
 ```
+
+## Props
+
+### foldersAndFiles
+
+Type: Array 
+
+Files and folders names which you want to copy
+
+### allFiles
+
+Type: Bool
+
+Default false, use true in case you want to copy all the files   
+
+### allDirectories
+
+Type: Bool
+
+Default false, use true in case you want to copy all the directories 
+
+### destination
+
+Type: String
+
+Full path to destination location 
+
 
 
 #### Result
