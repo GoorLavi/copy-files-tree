@@ -67,7 +67,6 @@ const copyFiles = async filesData => {
                 destination,
                 foldersAndFiles = []
             } = filesData[sourceDirPath];
-
             const filteredItems = getAllFilteredItems(sourceDirPath, allDirectories, allFiles);
             const items = foldersAndFiles.concat(filteredItems);
             allPromises = allPromises.concat(copyItems({items, destination, sourceDirPath}));
