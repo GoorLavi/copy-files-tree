@@ -61,11 +61,11 @@ import {copyFiles} from 'copy-files-tree'
 import {copyFiles} from 'copy-files-tree'
 
 const FoldersData = {
-    '/Users/user/folder-name 1': {
+    '/Users/user1/folder-name-1': {
         foldersAndFiles: ['image.png', 'inner-folder-name1'],
         destination: '/Users/user1/some-folder-name',
     },
-    '/Users/user1/folder-name 2': {
+    '/Users/user2/folder-name-2': {
         options: {
             allFiles: true,  // Folder files [`file-name1.txt`, `file-name2.txt`]
         },
@@ -82,14 +82,14 @@ const FoldersData = {
 
 ```js
 /Users/ ----- |
-               - user1 --- some-folder-name ---
+               - user1 --- folder-name-1 ---
               |                                 |
               |                                   -  'image.png'
               |                                 |
               |                                   - 'inner-folder-name1' // With all the inner files and folders
               |
               |
-               - user2 --- some-folder-name2 ---
+               - user2 --- folder-name-2 ---
                                                  |
                                                    - `file-name1.txt`
                                                  |
