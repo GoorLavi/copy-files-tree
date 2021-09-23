@@ -1,3 +1,5 @@
+We are recomending to use [copy-files-rev](https://github.com/GoorLavi/copy-files) instead of this package.
+
 # copy-files-tree
 
 Copy files and folder to destination by tree model
