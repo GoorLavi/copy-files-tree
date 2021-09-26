@@ -1,4 +1,5 @@
 yarn.lock
 node_modules
 .vscode
-
+test/yogev-testData.config
+test/goor-testData.config
